@@ -14,6 +14,7 @@ export const GetAllSales = gql`
         discord
         twitter
       }
+      totalCount
     }
   }
 `;

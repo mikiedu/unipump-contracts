@@ -12,6 +12,16 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "basescan.org",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "**.basescan.org",
+        port: "",
+      },
     ],
   },
   typescript: {
