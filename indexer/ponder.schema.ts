@@ -28,3 +28,11 @@ export const minBucket = onchainTable("minBucket", (t) => ({
   count: t.integer().notNull(),
   tokenAddress: t.hex().notNull(),
 }));
+
+// Query to list all UniPumpCreatorSales
+export const allUniPumpCreatorSales = {
+  type: "query",
+  resolve: async ({ db }) => {
+    return db.select().from(UniPumpCreatorSales);
+  },
+};
