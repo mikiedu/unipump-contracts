@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint"
   },
   "dependencies": {
@@ -30,9 +30,9 @@
     "graphql-tag": "^2.12.6",
     "lightweight-charts": "^3.3.0",
     "lucide-react": "^0.456.0",
-    "next": "14.2.16",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "15.4.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.53.2",
     "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.5.4",

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Toaster } from 'react-hot-toast';
+import { motion } from "framer-motion";
 
 
 const HomePage = () => {
@@ -32,21 +33,102 @@ const HomePage = () => {
     // debugger
     // router.push(`/meme/?name=${username}`);
   }
+  const fadeInUp = {
+    initial: { y: 20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: { duration: 0.5 }
+  };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="max-h-screen pt-10 h-full overflow-hidden">
-        <div className="max-w-[300px] flex items-center justify-center relative z-50 mx-auto">
-          <Image src={"/images/rocket.png"} alt="rocket" width={70} height={70} />
-          <Image src={"/images/unipump.png"} alt="pump" width={160} height={160} />
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 z-0" />
+          <div className="absolute inset-0 backdrop-blur-3xl z-0" />
+          <BackgroundBeamsDemo />
+          
+          {/* Hero Content */}
+          <div className="relative z-10 pt-20 pb-32 px-4">
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-[300px] flex items-center justify-center mx-auto mb-12"
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-xl opacity-50" />
+                <Image src={"/images/rocket.png"} alt="rocket" width={70} height={70} className="relative animate-bounce" />
+              </div>
+              <Image src={"/images/unipump.png"} alt="pump" width={160} height={160} className="relative" />
+            </motion.div>
+
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-center max-w-3xl mx-auto mb-8"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-6">
+                Launch Your Meme Token
+              </h1>
+              <p className="text-slate-300 text-lg md:text-xl mb-8">
+                Create, launch, and trade meme tokens with ease. Join the next generation of decentralized meme culture.
+              </p>
+              <div className="flex flex-col md:flex-row gap-4 justify-center">
+                <Link href="/create" className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:opacity-90 transition-opacity">
+                  Create Token
+                </Link>
+                <a href="#tokens" className="px-8 py-3 rounded-lg border border-slate-700 text-white hover:bg-slate-800 transition-colors">
+                  Explore Tokens
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Stats Section */}
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex justify-center gap-8 mt-12"
+            >
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">{data?.length || 0}</div>
+                <div className="text-slate-400">Total Tokens</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">24h</div>
+                <div className="text-slate-400">Average Launch</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-white">100%</div>
+                <div className="text-slate-400">Success Rate</div>
+              </div>
+            </motion.div>
+          </div>
         </div>
+
         <Toaster />
         {isLoading && <div className="text-center">Loading token sales...</div>}
         {isError && <div className="text-center text-red-500">Error loading token sales: {error?.message}</div>}
         <div className="mx-auto max-w-[500px] text-center p-4">
           <TextGenerateEffect duration={2} filter={false} words={words} />
         </div>
-        <div className="container mx-auto px-4 py-8">
-          <TextGenerateEffect duration={2} filter={false} words={"Current Unicorns"} className="text-center md:text-3xl mb-8" />
+        {/* Token List Section */}
+        <div id="tokens" className="container mx-auto px-4 py-16">
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Trending Meme Tokens</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
+              Discover the latest and most popular meme tokens in our ecosystem. Join a community of creators and traders.
+            </p>
+          </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {data && data.map((item) => (
