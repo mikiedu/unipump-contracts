@@ -2,7 +2,7 @@ import { EvervaultCard } from "@/components/ui/evervault-card";
 import "@coinbase/onchainkit/styles.css";
 import '@rainbow-me/rainbowkit/styles.css';
 import type { Metadata } from "next";
-import { poppinsRounded } from './fonts/fonts';
+import { poppinsRounded } from './fonts';
 import "./globals.css";
 import { Providers } from "./providers";
 

@@ -66,7 +66,7 @@ const Navbar = () => {
         </Link>
       </div>
       <Wallet className="relative z-50">
-        <ConnectWallet withWalletAggregator className="bg-white hover:bg-white">
+        <ConnectWallet className="bg-white hover:bg-white">
           <ConnectWalletText className="text-black">
             Connect Wallet
           </ConnectWalletText>
