@@ -15,20 +15,24 @@ export const MobileNav = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 md:hidden z-50">
-      <nav className="flex items-center justify-around px-2">
+    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-slate-800 md:hidden z-50">
+      <nav className="flex items-center justify-around h-[47px]">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center py-2 px-3 ${
-                isActive ? "text-blue-500" : "text-slate-400"
-              }`}
+              className="flex items-center justify-center w-full h-full"
             >
-              <item.icon size={24} />
-              <span className="text-xs mt-1">{item.label}</span>
+              <item.icon 
+                size={24} 
+                className={`transition-all ${
+                  isActive 
+                    ? "text-white scale-[1.02]" 
+                    : "text-slate-400"
+                }`}
+              />
             </Link>
           );
         })}

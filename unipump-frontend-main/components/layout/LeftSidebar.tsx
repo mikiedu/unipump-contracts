@@ -15,50 +15,46 @@ export const LeftSidebar = () => {
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-screen w-64 bg-slate-900 border-r border-slate-800 p-4 hidden md:block">
-      <div className="flex flex-col h-full">
-        <div className="flex items-center gap-2 px-4 py-6">
-          <span className="text-3xl">🦄</span>
-          <span className="text-xl font-bold text-white">UniPump</span>
-        </div>
-        
-        <nav className="flex-1 mt-8">
-          <ul className="space-y-2">
-            {menuItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-colors ${
-                      isActive
-                        ? "bg-blue-500/10 text-blue-500"
-                        : "text-slate-400 hover:bg-slate-800/50 hover:text-white"
-                    }`}
-                  >
-                    <item.icon size={20} />
-                    <span>{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+    <div className="h-full flex flex-col">
+      {/* Logo */}
+      <Link href="/" className="px-3 py-6 flex items-center gap-2">
+        <span className="text-2xl">🦄</span>
+        <h1 className="text-xl font-bold text-white">UniPump</h1>
+      </Link>
 
-        <div className="mt-auto px-4 py-6">
-          <div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/10">
-            <h4 className="text-sm font-medium text-white mb-2">Create Token</h4>
-            <p className="text-xs text-slate-400 mb-3">
-              Launch your own meme token in minutes!
-            </p>
-            <Link
-              href="/create"
-              className="block text-center text-sm px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
+      {/* Main Navigation */}
+      <nav className="flex-1 mt-2">
+        <ul className="space-y-1">
+          {menuItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-4 px-3 py-3 hover:bg-slate-800/50 rounded-lg transition-colors group ${
+                    isActive
+                      ? "font-bold"
+                      : "text-slate-300"
+                  }`}
+                >
+                  <item.icon size={24} className={isActive ? "text-white" : "text-slate-300 group-hover:text-white"} />
+                  <span className="group-hover:text-white">{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Create Token Button */}
+      <div className="px-3 py-4">
+        <Link
+          href="/create"
+          className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+        >
+          <PlusCircle size={20} />
+          <span className="font-medium">Create Token</span>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,18 @@
 "use client";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { TextGenerateEffect } from "@/com                <Link 
+                href={`/token/?address=${item.memeTokenAddress}`}
+                key={item.memeTokenAddress || item.name}
+                className={`${
+                  viewMode === 'list' ? 'w-full max-w-2xl' : ''
+                }`}
+              >
+                <div className={`relative z-20 bg-slate-900/80 backdrop-blur-lg rounded-2xl border border-slate-700 p-6 h-full hover:border-slate-500 shadow-xl hover:shadow-2xl ${
+                  viewMode === 'list' ? 'w-full' : ''
+                }`}>          </p>
+          </div>
+          
+          <div className={`relative z-20 ${ext-generate-effect";
 import { TokenList } from "@/components/TokenList";
 import { BackgroundBeamsDemo, words } from "@/components/ui/title";
 import useGetAllSales from "@/hooks/useGetAllSales";
@@ -8,7 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useState } from "react";
 import { Toaster } from 'react-hot-toast';
-import { motion } from "framer-motion";
+
 
 
 const HomePage = () => {
@@ -35,12 +47,6 @@ const HomePage = () => {
     // debugger
     // router.push(`/meme/?name=${username}`);
   }
-  const fadeInUp = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    transition: { duration: 0.5 }
-  };
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
@@ -53,24 +59,15 @@ const HomePage = () => {
           
           {/* Hero Content */}
           <div className="relative z-10 pt-20 pb-32 px-4">
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-[300px] flex items-center justify-center mx-auto mb-12"
-            >
+            <div className="max-w-[300px] flex items-center justify-center mx-auto mb-12">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-xl opacity-50" />
                 <Image src={"/images/rocket.png"} alt="rocket" width={70} height={70} className="relative animate-bounce" />
               </div>
               <Image src={"/images/unipump.png"} alt="pump" width={160} height={160} className="relative" />
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-center max-w-3xl mx-auto mb-8"
+            <div className="text-center max-w-3xl mx-auto mb-8"
             >
               <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-6">
                 Launch Your Creator coin
@@ -86,15 +83,10 @@ const HomePage = () => {
                   Explore coins
                 </a>
               </div>
-            </motion.div>
+            </div>
 
             {/* Stats Section */}
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex justify-center gap-8 mt-12"
-            >
+            <div className="flex justify-center gap-8 mt-12">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">{data?.length || 0}</div>
                 <div className="text-slate-400">Total Tokens</div>
@@ -107,7 +99,7 @@ const HomePage = () => {
                 <div className="text-2xl font-bold text-white">100%</div>
                 <div className="text-slate-400">Success Rate</div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -119,13 +111,7 @@ const HomePage = () => {
         </div>
         {/* Token List Section */}
         <div id="tokens" className="relative z-20 container mx-auto px-4 py-16">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12 relative z-20"
-          >
+          <div className="text-center mb-12 relative z-20">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Trending Meme Tokens</h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
               Discover the latest and most popular creator coins in our ecosystem. Join a community of creators and traders.
@@ -160,7 +146,7 @@ const HomePage = () => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
           
           <div className={`relative z-20 ${
             viewMode === 'grid' 
