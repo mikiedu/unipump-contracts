@@ -1,23 +1,150 @@
 "use client";
+import { Heart, MessageCircle, Repeat2, Share } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// Update the import path below if your types file is located elsewhere
+import { useState } from "react";
 import { TokenItem } from "../types";
 
 interface TokenCardProps {
   item: TokenItem;
-  viewMode: 'grid' | 'list';
 }
 
-export const TokenCard = ({ item, viewMode }: TokenCardProps) => {
+const fallbackImage = "/images/rocket.png";
+
+export const TokenCard = ({ item }: TokenCardProps) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const displayImage = (!item.imageUri || imageError) ? fallbackImage : item.imageUri;
+  const truncateAddress = (address: string) => {
+    if (!address) return "Unknown";
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
   return (
-    <Link 
-      href={`/token/?address=${item.memeTokenAddress}`}
-      key={item.memeTokenAddress || item.name}
-      className={`transform transition-all hover:scale-[1.02] ${
-        viewMode === 'list' ? 'w-full max-w-2xl' : ''
-      }`}
-    >
+    <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden mb-6 max-w-xl mx-auto">
+      {/* Card Header */}
+      <div className="flex items-center p-4">
+        <div className="flex items-center gap-3 flex-1">
+          <Link href={`/token/?address=${item.memeTokenAddress}`}>
+            <div className="w-10 h-10 relative">
+              <Image 
+                src={item.imageUri || "/images/rocket.png"} 
+                alt={item.name || "Token"} 
+                width={40} 
+                height={40}
+                className="rounded-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = "/images/rocket.png";
+                }}
+              />
+            </div>
+          </Link>
+          <div>
+            <Link href={`/token/?address=${item.memeTokenAddress}`}>
+              <h3 className="text-sm font-semibold text-white hover:text-blue-500">
+                {item.name || "Unnamed Token"}
+              </h3>
+            </Link>
+            <p className="text-xs text-slate-400">
+              {item.createdBy ? `${item.createdBy.slice(0, 6)}...${item.createdBy.slice(-4)}` : "Unknown creator"}
+            </p>
+          </div>
+        </div>
+        <button className="text-sm font-medium text-blue-500 hover:text-blue-400">
+          Follow
+        </button>
+      </div>
+
+      {/* Token Image */}
+      <Link href={`/token/?address=${item.memeTokenAddress}`}>
+        <div className="relative aspect-square bg-slate-800">
+          <Image 
+            src={item.imageUri || "/images/rocket.png"}
+            alt={item.name || "Token"}
+            fill
+            className="object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/images/rocket.png";
+            }}
+          />
+        </div>
+      </Link>
+
+      {/* Action Buttons */}
+      <div className="p-4">
+        <div className="flex items-center gap-4 mb-3">
+          <button 
+            onClick={() => setIsLiked(!isLiked)}
+            className={`hover:text-red-500 transition-colors ${isLiked ? 'text-red-500' : 'text-slate-300'}`}
+          >
+            <Heart size={24} fill={isLiked ? "currentColor" : "none"} />
+          </button>
+          <button className="text-slate-300 hover:text-slate-100">
+            <MessageCircle size={24} />
+          </button>
+          <button className="text-slate-300 hover:text-slate-100">
+            <Repeat2 size={24} />
+          </button>
+          <button className="text-slate-300 hover:text-slate-100 ml-auto">
+            <Share size={24} />
+          </button>
+        </div>
+
+        {/* Token Details */}
+        <div className="space-y-2">
+          <p className="text-sm">
+            <span className="font-semibold text-white">{item.symbol || "Unknown"}</span>{" "}
+            <span className="text-slate-300">{item.bio || "No description available"}</span>
+          </p>
+          <div className="flex gap-2">
+            {item.twitter && (
+              <a 
+                href={`https://twitter.com/${item.twitter}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline text-sm"
+              >
+                @{item.twitter}
+              </a>
+            )}
+            {item.discord && (
+              <a 
+                href={item.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-500 hover:underline text-sm"
+              >
+                Discord
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Add Comment Section */}
+      <div className="flex items-center gap-3 p-4 border-t border-slate-800">
+        <Image
+          src="/images/rocket.png"
+          alt="Your avatar"
+          width={32}
+          height={32}
+          className="rounded-full"
+        />
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          className="flex-1 bg-transparent text-sm text-slate-300 placeholder-slate-500 focus:outline-none"
+        />
+        <button className="text-sm font-medium text-blue-500 hover:text-blue-400">
+          Post
+        </button>
+      </div>
+    </div>
+  );
       <div className={`relative z-20 bg-slate-900/80 backdrop-blur-lg rounded-2xl border border-slate-700 p-6 h-full hover:border-slate-500 transition-all shadow-xl hover:shadow-2xl ${
         viewMode === 'list' ? 'w-full' : ''
       }`}>
