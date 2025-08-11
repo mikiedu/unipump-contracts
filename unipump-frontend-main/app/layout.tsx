@@ -2,20 +2,9 @@ import { EvervaultCard } from "@/components/ui/evervault-card";
 import "@coinbase/onchainkit/styles.css";
 import '@rainbow-me/rainbowkit/styles.css';
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { poppinsRounded } from './fonts/fonts';
 import "./globals.css";
 import { Providers } from "./providers";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Unipump",
@@ -31,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppinsRounded.variable} font-poppins antialiased`}
       >
         <Providers >
           {/* <div

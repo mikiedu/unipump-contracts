@@ -1,17 +1,21 @@
 "use client";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import         <div className="mx-auto max-w-[500px] text-center p-4">
+          <TextGenerateEffect duration={2} filter={false} words={words} />
+        </div>
+        <TokenList data={data} isLoading={isLoading} isError={isError} error={error} />enerateEffect } from "@/components/ui/text-generate-effect";
 import { BackgroundBeamsDemo, words } from "@/components/ui/title";
 import useGetAllSales from "@/hooks/useGetAllSales";
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Toaster } from 'react-hot-toast';
 import { motion } from "framer-motion";
 
 
 const HomePage = () => {
   const { data, isLoading, isError, error } = useGetAllSales();
+  const [viewMode, setViewMode] = useState('grid');
 
   // Log query state
   console.log("Query state:", { isLoading, isError, error, dataLength: data?.length });
@@ -71,17 +75,17 @@ const HomePage = () => {
               className="text-center max-w-3xl mx-auto mb-8"
             >
               <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-6">
-                Launch Your Meme Token
+                Launch Your Creator coin
               </h1>
               <p className="text-slate-300 text-lg md:text-xl mb-8">
                 Create, launch, and trade meme tokens with ease. Join the next generation of decentralized meme culture.
               </p>
               <div className="flex flex-col md:flex-row gap-4 justify-center">
                 <Link href="/create" className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:opacity-90 transition-opacity">
-                  Create Token
+                  Launch a coin
                 </Link>
                 <a href="#tokens" className="px-8 py-3 rounded-lg border border-slate-700 text-white hover:bg-slate-800 transition-colors">
-                  Explore Tokens
+                  Explore coins
                 </a>
               </div>
             </motion.div>
@@ -116,29 +120,71 @@ const HomePage = () => {
           <TextGenerateEffect duration={2} filter={false} words={words} />
         </div>
         {/* Token List Section */}
-        <div id="tokens" className="container mx-auto px-4 py-16">
+        <div id="tokens" className="relative z-20 container mx-auto px-4 py-16">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-12 relative z-20"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Trending Meme Tokens</h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              Discover the latest and most popular meme tokens in our ecosystem. Join a community of creators and traders.
+              Discover the latest and most popular creator coins in our ecosystem. Join a community of creators and traders.
             </p>
+            
+            {/* View Toggle */}
+            <div className="flex justify-center mt-8">
+              <div className="bg-slate-800 rounded-lg p-1 inline-flex">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-4 py-2 rounded-md transition-all ${
+                    viewMode === 'grid'
+                      ? 'bg-blue-500 text-white'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-4 py-2 rounded-md transition-all ${
+                    viewMode === 'list'
+                      ? 'bg-blue-500 text-white'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          <div className={`relative z-20 ${
+            viewMode === 'grid' 
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl'
+              : 'flex flex-col items-center gap-4 max-w-2xl'
+          } mx-auto`}>
             {data && data.map((item) => (
               <Link 
                 href={`/token/?address=${item.memeTokenAddress}`}
                 key={item.memeTokenAddress || item.name}
-                className="transform transition-transform hover:scale-105"
+                className={`transform transition-all hover:scale-[1.02] ${
+                  viewMode === 'list' ? 'w-full max-w-2xl' : ''
+                }`}
               >
-                <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 p-6 h-full hover:border-slate-500 transition-colors">
-                  <div className="flex flex-col gap-4">
+                <div className={`relative z-20 bg-slate-900/80 backdrop-blur-lg rounded-2xl border border-slate-700 p-6 h-full hover:border-slate-500 transition-all shadow-xl hover:shadow-2xl ${
+                  viewMode === 'list' ? 'w-full' : ''
+                }`}>
+                  <div className={`${
+                    viewMode === 'list' 
+                      ? 'flex flex-row items-center gap-6' 
+                      : 'flex flex-col gap-4'
+                  }`}>
                     {/* Token Image and Symbol */}
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 relative flex-shrink-0">
@@ -173,13 +219,26 @@ const HomePage = () => {
                       </div>
                     </div>
 
-                    {/* Description */}
-                    <p className="text-sm text-slate-300 line-clamp-2">
-                      {item.bio || "No description available"}
-                    </p>
+                    {viewMode === 'list' ? (
+                      <div className="flex-1">
+                        {/* Description */}
+                        <p className="text-sm text-slate-300 mb-2">
+                          {item.bio || "No description available"}
+                        </p>
 
-                    {/* Creator and Social Links */}
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
+                        {/* Creator and Social Links */}
+                        <div className="flex items-center justify-between">
+                    ) : (
+                      <>
+                        {/* Description */}
+                        <p className="text-sm text-slate-300 line-clamp-2">
+                          {item.bio || "No description available"}
+                        </p>
+
+                        {/* Creator and Social Links */}
+                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-700">
+                      </>
+                    )}
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 relative">
                           <Image 
@@ -218,7 +277,9 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-        <BackgroundBeamsDemo />
+        <div className="relative z-10">
+          <BackgroundBeamsDemo />
+        </div>
         <PlaceholdersAndVanishInput
           placeholders={placeholders}
           onChange={handleChange}
